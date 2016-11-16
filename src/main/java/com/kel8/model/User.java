@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kel8;
+package com.kel8.model;
 
+import com.kel8.view.ViewUser;
+import java.util.Scanner;
 
-
- import java.math.BigDecimal;
- import java.util.List;
 /**
  *
  * @author ucong18
  */
-class User {
-    /*
+public class User {
+       /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,10 +21,18 @@ class User {
         private String email;
 	private String password;
 	private String name;
-	private Integer isAdmin;
+	private int isAdmin;
+       
       
-      User(){
+      public User(){
           
+      }
+      
+      public User(String Email, String password, String name, int isAdmin){
+          this.email=Email;
+          this.name=name;
+          this.password=password;
+          this.isAdmin = isAdmin;
       }
       public  void setEmail(String email){
             this.email = email;
@@ -58,6 +65,18 @@ class User {
      public int getIsAdmin(){
          return this.isAdmin;
      }
+     
+     /*
+     public void setSkills(List<String> skills){
+         this.skills = skills;
+     }
         
+     public List<String> getSkills(){
+         return this.skills;
+     }
 
+     */
+
+  
+    
 }

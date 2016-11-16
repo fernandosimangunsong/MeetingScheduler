@@ -1,0 +1,27 @@
+{ "users" : [
+ {
+ 	"idusers" :  1,
+ 	"email"   : "admin@gmail.com",
+ 	"nama"  : "admin",
+ 	"password" : "admin",
+ 	"status" :1
+ },
+ 
+ {
+ 	"idusers" :  2,
+ 	"email"   : "rizki@gmail.com",
+ 	"nama"  : "admin",
+ 	"password" : "admin",
+ 	"status" :1
+ },
+ 
+ {
+ 	"idusers" :  3,
+ 	"email"   : "novan@gmail.com",
+ 	"nama"  : "admin",
+ 	"password" : "admin",
+ 	"status" :1
+ }
+ 
+]
+}
