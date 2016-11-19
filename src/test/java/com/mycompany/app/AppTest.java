@@ -1,4 +1,4 @@
-package com.kel8;
+package com.mycompany.app;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

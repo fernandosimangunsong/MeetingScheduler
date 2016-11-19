@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kel8.view;
+package com.mycompany.app.Controller;
+
+import com.mycompany.app.View.MenuUtama;
+
+
 
 /**
  *
  * @author ucong18
  */
-
-import com.kel8.controller.UserController;
-import java.io.IOException;
-import java.util.Scanner;
-
-public class Menu {
+public class MenuController {
     
-    public Menu(){
+    public MenuController(){
         
     }
-   
+    
+    
+    
 }

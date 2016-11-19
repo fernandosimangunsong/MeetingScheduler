@@ -3,32 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kel8.model;
-
-import com.kel8.view.ViewUser;
-import java.util.Scanner;
+package com.mycompany.app.Model;
 
 /**
  *
  * @author ucong18
  */
 public class User {
-       /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
         private String email;
 	private String password;
 	private String name;
-	private int isAdmin;
+	private boolean isAdmin;
        
       
       public User(){
           
       }
       
-      public User(String Email, String password, String name, int isAdmin){
+      public User(String email, String nama){
+          this.email= email;
+          this.name = nama;
+      }
+              
+      
+      public User(String Email, String password, String name, boolean isAdmin){
           this.email=Email;
           this.name=name;
           this.password=password;
@@ -58,25 +56,11 @@ public class User {
             return this.name;
       }
        
-     public void setIsAdmin(int isAdmin){
+     public void setIsAdmin(boolean isAdmin){
          this.isAdmin = isAdmin;
      }
      
-     public int getIsAdmin(){
+     public boolean getIsAdmin(){
          return this.isAdmin;
      }
-     
-     /*
-     public void setSkills(List<String> skills){
-         this.skills = skills;
-     }
-        
-     public List<String> getSkills(){
-         return this.skills;
-     }
-
-     */
-
-  
-    
 }

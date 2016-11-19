@@ -1,27 +1,19 @@
-{ "users" : [
+{
+ "users" : [ {
+  "email" : "fernando@gmail.com",
+  "password" : "fernando",
+  "name" : "fernando",
+  "isAdmin" : false
+}, {
+  "email" : "ucong@gmail.com",
+  "password" : "ucong",
+  "name" : "ucong",
+  "isAdmin" : false
+} 
  {
- 	"idusers" :  1,
- 	"email"   : "admin@gmail.com",
- 	"nama"  : "admin",
- 	"password" : "admin",
- 	"status" :1
- },
- 
- {
- 	"idusers" :  2,
- 	"email"   : "rizki@gmail.com",
- 	"nama"  : "admin",
- 	"password" : "admin",
- 	"status" :1
- },
- 
- {
- 	"idusers" :  3,
- 	"email"   : "novan@gmail.com",
- 	"nama"  : "admin",
- 	"password" : "admin",
- 	"status" :1
- }
- 
-]
+  "email" : "ucong18@gmail.com",
+  "password" : "ucong18",
+  "name" : "ucong18",
+  "isAdmin" : true
+} ]
 }
