@@ -1,21 +1,42 @@
 [ {
   "email" : "fernando@gmail.com",
-  "password" : "fernando",
-  "name" : "fernando",
-  "isAdmin" : false
-}, {
-  "email" : "ucong@gmail.com",
-  "password" : "13141",
-  "name" : "ucong",
-  "isAdmin" : false
+  "password" : "12345",
+  "name" : "fernando simangunsong",
+  "isAdmin" : true
 }, {
   "email" : "novan@gmail.com",
-  "password" : "131412",
+  "password" : "123",
   "name" : "novan",
-  "isAdmin" : true
+  "isAdmin" : false
 }, {
   "email" : "rizki@gmail.com",
   "password" : "124524",
   "name" : "rizki",
   "isAdmin" : true
+}, {
+  "email" : "ucong@gmail.com",
+  "password" : "12345",
+  "name" : "ucong simangunsong",
+  "isAdmin" : false
+}, {
+  "email" : "jere@gmail.com",
+  "password" : "12345",
+  "name" : "yeremia@gmail.com",
+  "isAdmin" : true
+}, {
+  "email" : "arif@gmail.com",
+  "password" : "12345",
+  "name" : "Tutur Arif Simangunsong",
+  "isAdmin" : true
+}, {
+  "email" : "nova@gmail.com",
+  "password" : "12345",
+  "name" : "nova",
+  "isAdmin" : true
+} 
+, {
+  "email" : "a",
+  "password" : "a",
+  "name" : "a",
+  "isAdmin" : false
 } ]

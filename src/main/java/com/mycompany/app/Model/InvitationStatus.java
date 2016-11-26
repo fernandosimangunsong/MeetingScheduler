@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.app.Controller;
+package com.mycompany.app.Model;
 
 /**
  *
  * @author ucong18
  */
-class JSONArray {
-    
+public enum InvitationStatus {
+	WAITING,
+	ACCEPTED,
+	REJECTED,
+	CANCELED,
+	CONFIRMED,
+	FINISHED
 }

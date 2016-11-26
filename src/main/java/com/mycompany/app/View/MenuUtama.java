@@ -18,41 +18,35 @@ public class MenuUtama {
     public MenuUtama(){
         
     }
+    
     public List formLogin(){
         List datalogin = new ArrayList<>();
         
-        String email,password,IsAdmin = null;
-        Boolean status;
-        
+        String email,password;
         Scanner input = new Scanner(System.in);
         
         System.out.println("Please Login");
         System.out.print("User Name (Email) : ");
-        email =input.next();
+        email =input.nextLine();
+        
+        System.out.print("Password          : ");
+        password =input.nextLine();
+        
         datalogin.add(email);
-        
-        System.out.print("Password: ");
-        password =input.next();
         datalogin.add(password);
-        
-        
-        System.out.print("IsAdmin (Yes/No):");
-        IsAdmin = input.next();
-        
-        switch (IsAdmin) {
-            case "Yes":
-                status = true;
-                break;
-            case "No":
-                status = false;
-                break;
-            default:
-                status = null;
-                break;
-        }
-        
-        datalogin.add(status);
         
         return datalogin;
     }
+    
+    /*
+    public String role(){
+        
+        Scanner input = new Scanner(System.in);
+        System.out.print("Select Your Role As (Admin (A)/ Inititaor( (I) / Participant (P)) : ");
+        
+        String loginIs = input.nextLine();
+        return loginIs;       
+    }
+    
+    */
 }

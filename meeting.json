@@ -1,0 +1,31 @@
+[ {
+  "id" : 10,
+  "email" : "rizki@gmail.com",
+  "status" : "Negosiasi",
+  "availability" : null
+}, {
+  "id" : 10,
+  "email" : "ucong@gmail.com",
+  "status" : "Negosiasi",
+  "availability" : null
+}, {
+  "id" : null,
+  "email" : null,
+  "status" : null,
+  "availability" : null
+}, {
+  "id" : 11,
+  "email" : "rizki@gmail.com",
+  "status" : "Negosiasi",
+  "availability" : null
+}, {
+  "id" : 11,
+  "email" : "ucong@gmail.com",
+  "status" : "Negosiasi",
+  "availability" : null
+}, {
+  "id" : 11,
+  "email" : "novan@gmail.com",
+  "status" : "Negosiasi",
+  "availability" : null
+} ]

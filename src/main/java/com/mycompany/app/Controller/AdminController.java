@@ -6,12 +6,13 @@
 package com.mycompany.app.Controller;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 import com.mycompany.app.Model.User;
+import com.mycompany.app.Services.CheckData;
 import com.mycompany.app.View.MenuAdmin;
 
 
@@ -42,7 +43,8 @@ public class AdminController {
     
     public List bacaFileUser() throws IOException{
         ObjectMapper mapper = new ObjectMapper();
-        List datauser = mapper.readValue(new File("user.json"),List.class);
+        //List datauser = mapper.readValue(new File("user.json"),List.class);
+        List<User> datauser = mapper.readValue(new File("user.json"),new TypeReference<List<User>>(){});
         return datauser;
         
     }
@@ -54,44 +56,6 @@ public class AdminController {
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("user.json"),datauser);
     }
     
-    
-    public boolean cekEmailExist(String email) throws IOException{
-        boolean emailExist =false;
-        
-       
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootArray = mapper.readTree(new File("user.json"));
-        for(JsonNode root : rootArray){
-            
-            if(email.equals(root.path("email").asText())){
-                emailExist = true;
-            }
-            
-        } 
-        
-        return emailExist;
-    }
-    
-    
-    public void listUser() throws IOException{
-        
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootArray = mapper.readTree(new File("user.json"));
-        int i=1;
-        
-            System.out.println("===================  Data User =====================");
-            System.out.println("====================================================");
-        for(JsonNode root : rootArray){
-            
-            String email = root.path("email").asText();
-            String name  = root.path("name").asText();
-            System.out.println("User Ke-" +i);
-            System.out.println("Email  : "+ email);
-            System.out.println("name   : "+ name);
-            System.out.println("================================================");
-            i++;
-        }        
-    }
     
     
     public void createUser() throws IOException{
@@ -107,44 +71,49 @@ public class AdminController {
        saveUser(tmp);   
    }
     
-    public void updateUser(String email, List newDataUser)throws IOException{
-
-    }
+    
     
     public void editUser(String email) throws IOException{
-        List<User> user = new ArrayList<>();
+        User user =new User();
+        CheckData CD = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> datauser = mapper.readValue(new File("user.json"),new TypeReference<List<User>>(){});
         
-        if(cekEmailExist(email)){
-            /* edit user berdasarkan email */
-            System.out.println("Before Update");
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode rootArray = mapper.readTree(new File("user.json"));
+        if(CD.cekEmailExist(email)){
                 
-                for(JsonNode root : rootArray){
-                    
-                    if(email.equals(root.path("email").asText())){
-                        
-                        ((ObjectNode) root).put("email", "fernando18@gmail.com");
-                        ((ObjectNode) root).put("nickname", "mkyong");
-                        System.out.println("Update berhasil");
-                    }     
-            
-                }
-        
-                    
-                 
-        }else{
-            System.out.println("User tidak ditemukan");
+                /* edit user berdasarkan email */
+                /*Print data user sebelum edit */
+                System.out.println("Data sebelum edit");
+                
+                 menuadmin.printUserbyEmail(email);
+                
+                 Integer id = CD.getIdExist(email);
+                
+                 user = menuadmin.formEditUser();
+                 datauser.set(id, user);
+          
+                 saveUser(datauser);
+                
+                
         }
     }
     
     public void deleteUser(String email) throws IOException{
-        //instantiate your json array (e.g. from a string, or a file)
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode rootArray = mapper.readTree(new File("user.json"));
+        
+        User user =new User();
+        CheckData CD = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> datauser = mapper.readValue(new File("user.json"),new TypeReference<List<User>>(){});
+        
+        if(CD.cekEmailExist(email)){
+            int id = CD.getIdExist(email);
             
             
+            datauser.remove(id);
+            saveUser(datauser);
             
+        }
+              
     }
     
     

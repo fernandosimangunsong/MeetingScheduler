@@ -20,6 +20,10 @@ public class User {
           
       }
       
+      public User(String email){
+          this.email=email;
+      }
+      
       public User(String email, String nama){
           this.email= email;
           this.name = nama;
