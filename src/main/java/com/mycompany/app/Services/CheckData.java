@@ -262,17 +262,17 @@ public class CheckData {
         return status;
     }
     
-//    public boolean checkDate(String tempdate){
-//        boolean status = false;
-//        String pattern = "dd/MM/yyyy";
-//        SimpleDateFormat format = new SimpleDateFormat(pattern);
-//        Date StartDate = format.parse(tempDate.substring(0, 10));
-//        Date EndDate = format.parse(tempDate.substring(11, 21));
-//        if(data.equals("Yes") || data.equals("No")){
-//            status = true;
-//        }
-//        return status;
-//    }
+    public boolean checkDate(String data) throws ParseException{
+        boolean status = false;
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date StartDate = format.parse(data.substring(0, 10));
+        Date EndDate = format.parse(data.substring(11, 21));
+        if(StartDate.before(EndDate)){
+            status = true;
+        }
+        return status;
+    }
     
     
 }

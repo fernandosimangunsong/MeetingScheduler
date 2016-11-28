@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.app.Model.Invitation;
 import com.mycompany.app.Model.Meeting;
 import com.mycompany.app.Services.CheckData;
-import com.mycompany.app.View.MenuParticipant;
 import com.mycompany.app.View.MenuUser;
 import java.io.File;
 import java.io.IOException;
@@ -26,13 +25,11 @@ public class InvitationController {
     
     private final Invitation invitation;
     private final MenuUser menuUser;
-    private final MenuParticipant menuParticipant;
     
     
-    public InvitationController(Invitation invitation, MenuUser menuUser, MenuParticipant menuParticipant){
+    public InvitationController(Invitation invitation, MenuUser menuUser){
         this.invitation =invitation;
         this.menuUser =menuUser;
-        this.menuParticipant = menuParticipant;
     }
     
     public List bacaFileInvitation(String namafile) throws IOException{
@@ -64,7 +61,7 @@ public class InvitationController {
                  
                  System.out.println(index);
                  
-                 data = menuParticipant.formInvitation();
+                 data = menuUser.formInvitation();
                  
                  data.SetId(id);
                  data.setEmail(email);

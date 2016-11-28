@@ -54,6 +54,22 @@ public class MenuUser {
         return emailUser;
     }
     
+    
+    public void formHelpInititaor(){
+        System.out.println("1. create-meeting,  membuat sebuah pertemuan baru.");
+        System.out.println("2. list-meeting,  melihat daftar pertemuan");
+        System.out.println("3. detail-meeting <meeting-id>, melihat detil sebuah pertemuan.");
+        System.out.println("4. edit-meeting <meeting-id>, mengubah pertemuan");
+        System.out.println("5. cancel-meeting <meeting-id>, membatalkan secara paksa sebuah pertemuan.");
+        System.out.println("6. run-scheduler <meeting-id>, mencari jadwal pertemuan yang sesuai.");    
+    }
+    
+    public void formHelpParticipant(){
+        System.out.println("1. list-invitation, melihat daftar semua invitation.");
+        System.out.println("2. detail-invitation <meeting-id>, melihat detil sebuah invitation.");
+        System.out.println("3. accept-invitation <meeting-id>, menerima invitation.");
+        System.out.println("4. reject-invitation <meeting-id>, menolak invitation.");
+    }
     /* ============================================================================== */
     
      /*                  List Meeting Berdasarkan status Pertemuan                     */    
@@ -227,6 +243,11 @@ public class MenuUser {
             System.out.println("Data tidak boleh kosong");
             System.out.print("Lokasi (Room01 - Room05) :");
             lokasi = reader.readLine();
+            while(!cd.checkLokasi(lokasi)){
+                System.out.println("Ruangan tidak ditemukan");
+                System.out.print("Lokasi (Room01 - Room05)  :");
+                lokasi = reader.readLine();
+            }
         }
 
         System.out.print("Durasi (1 - 6) :");
@@ -308,14 +329,15 @@ public class MenuUser {
         cal.add(Calendar.DATE, -3);
         Date negotiationDeadline = cal.getTime();
         System.out.println(negotiationDeadline);
+                
         
-        boolean info = false;    
+    boolean info = false;    
         
-        do{
-            System.out.print("Yakin data yang di input sudah benar :(Y/N)");
-            String yakin =reader.readLine();
-
-            switch(yakin){
+    do{
+        System.out.print("Yakin data yang di input sudah benar :(Y/N)");
+        String yakin =reader.readLine();
+        
+        switch(yakin){
             case "Y":   
                         info = true;
                         
@@ -342,11 +364,10 @@ public class MenuUser {
                         System.out.println("Pilihan tidak ada");
                         
             break;
-            }
-        }while(!info);        
-//        asdas
-        
-        return addDataMeeting;
+        }
+    }while(!info); 
+    
+            return addDataMeeting;
        
     }
      
@@ -455,19 +476,122 @@ public class MenuUser {
        
     }
      
-    /* ============================================================================== */
+     /* ============================================================================== */
     
-             /*                    Kumpulan Menu User                             */    
+             /*                    Form Invitaion                             */    
      
     /* ============================================================================== */
-    public void formHelpInitiator(){
-        System.out.println("create-meeting,  membuat sebuah pertemuan baru.");
-        System.out.println("list-meeting,  melihat daftar pertemuan");
-        System.out.println("detail-meeting <meeting-id>, melihat detil sebuah pertemuan.");
-        System.out.println("edit-meeting <meeting-id>, mengubah pertemuan");
-        System.out.println("cancel-meeting <meeting-id>, membatalkan secara paksa sebuah pertemuan.");
-        System.out.println("run-scheduler <meeting-id>, mencari jadwal pertemuan yang sesuai.");    
+    
+    public Invitation formInvitation() throws IOException, ParseException{
+        Invitation iv = new Invitation();
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+       
+        String status,temp;
+        List availability = new ArrayList<>();
+        
+//        Scanner input = new Scanner(System.in);
+        
+//        System.out.println("Invitation");
+//        System.out.print("Status :");
+//        status =reader.readLine();       
+        /*
+          contoh isi temp:  11/11/2016 6, 12/11/2016 7
+        */
+        
+        System.out.print("Waktu yang tersedia :");
+        temp =reader.readLine();
+        
+        /* ubah tanggal yang dalam bentuk string ke format date */
+        availability = cd.splitData2(temp);
+        
+
+                
+        iv.setStatus("CONFIRMED");
+        iv.setAvailability((ArrayList) availability);
+        
+        return iv;
+       
     }
+    
+     /* ============================================================================== */
+    
+             /*                   List All Invitation By Email                           */    
+     
+    /* ============================================================================== */
+    
+    public void listAllMyInvitation(String email) throws IOException{
+        /* menampilkan undangan berdasarkan email */
+        CheckData cd = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Invitation> listdata = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
+        
+        List id = new ArrayList();
+        id = cd.getIdInvitation(email);
+       
+        
+        if(!id.isEmpty()){
+          for(Invitation data:listdata){
+                if(email.equals(data.getEmail())){
+                  System.out.print("(Id : "+data.getId()+") ");
+                  System.out.print(", ");
+                  System.out.print("Status  : "+data.getStatus());
+                  System.out.println("");
+                }
+           }
+          
+        }else{
+            System.out.println("Tidak ada invitation untuk anda");
+        }
+        
+    }
+    
+     /* ============================================================================== */
+    
+         /*          Detail Invitation By Id meeting & email                   */    
+     
+    /* ============================================================================== */
+    public void detailMyInvitation(int idx, String email) throws IOException{
+        /* menampilkan undangan berdasarkan email */
+        CheckData cd = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Invitation> listdata = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
+        
+        List id = new ArrayList();
+        id = cd.getIdInvitation(email);
+       
+        
+        if(!id.isEmpty()){
+          for(Invitation data:listdata){
+                if(email.equals(data.getEmail()) && idx==(data.getId())){
+                  System.out.print("(Id : "+data.getId()+") ");
+                  System.out.print(", ");
+                  System.out.print("Status  : "+data.getStatus());
+                  System.out.println("");
+                }
+           }
+          
+           for(Meeting usr:lstMeeting){
+                if( idx==(usr.getId())){
+                     System.out.println("Title : " +usr.getJudulM() );
+                     System.out.println("Agenda : " +usr.getAgendaM());
+                     System.out.println("Lokasi : " +usr.getLokasiM());
+                     System.out.println("Durasi (Jam) : " +usr.getDurasiM());
+                     System.out.println("Proposed Date : " +usr.getTawal()+ " - " +usr.getTAkhir());
+                     System.out.println("Participant Vip : " +usr.getVip());
+                     System.out.println("Participant : " +usr.getParcipantM());
+
+                     
+                } 
+            }
+        }else{
+            System.out.println("Tidak ada invitation untuk anda");
+        }
+        
+    }
+    
     
     /* ============================================================================== */
     
@@ -478,11 +602,10 @@ public class MenuUser {
         Meeting meeting = new Meeting();
         Invitation invit = new Invitation();
         MenuUser   mu    = new MenuUser();
-        MenuParticipant mp = new MenuParticipant();
         
             
         MeetingController MC = new MeetingController(meeting, mu, invit);
-        InvitationController IV = new InvitationController(invit, mu, mp);
+        InvitationController IV = new InvitationController(invit, mu);
         
         
         Scanner input = new Scanner(System.in);
@@ -516,8 +639,6 @@ public class MenuUser {
                             MC.cancelMeeting(id,email);
                         break;
 
-                    
-                    
                     case "edit-meeting":
                             id =input.nextInt();
                             MC.editMeeting(id,email);
@@ -527,10 +648,76 @@ public class MenuUser {
                     case "run-scheduler":
                             id =input.nextInt();
                             break;
-                    case "help":
-                        formHelpInitiator();
-                        break;
                     
+                    case "help":
+                           formHelpInititaor();
+                            break;
+                            
+                    case "exit":
+//                         System.exit(0);
+                         break;
+                    default:
+                        System.out.println("Sintaks error");
+                        break;
+             }
+         
+       return menu;
+    }
+    
+    /* ============================================================================== */
+    
+             /*                    Kumpulan Menu Participant                             */    
+     
+    /* ============================================================================== */
+    public String operasiParticipant() throws IOException, ParseException{
+        Meeting meeting = new Meeting();
+        Invitation invit = new Invitation();
+        MenuUser   mu    = new MenuUser();
+        
+            
+        MeetingController MC = new MeetingController(meeting, mu, invit);
+        InvitationController IV = new InvitationController(invit, mu);
+        
+        
+        Scanner input = new Scanner(System.in);
+        String menu;
+        String email = getEmailUser();
+        
+            int id;
+        
+            System.out.println("============ Menu Participant =================== ");
+            System.out.print  (">");
+            menu = input.next();
+            
+            
+            switch (menu) {
+
+                    case "list-invitation":
+                            listAllMyInvitation(email);
+                            break;
+                            
+                            
+                    case "detail-invitation":
+                            id =input.nextInt();
+                            detailMyInvitation(id,email);
+                            break;
+                    
+                    case "reject-invitation":
+                            id =input.nextInt();
+                            IV.rejectInvitation(id,email);
+                            break;   
+                            
+                    case "accept-invitation":
+                            id =input.nextInt();
+                            IV.editMyInvitation(id,email);
+                            break;
+                    
+                    
+                    case "help":
+                            formHelpParticipant();
+                            break;
+                    
+                            
                     case "exit":
 //                         System.exit(0);
                          break;

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.app.Model.Meeting;
 import com.mycompany.app.Model.User;
 import com.mycompany.app.View.MenuAdmin;
-import com.mycompany.app.View.MenuParticipant;
 import com.mycompany.app.View.MenuUser;
 import com.mycompany.app.View.MenuUtama;
 import java.io.File;
@@ -33,8 +32,6 @@ public class MenuController {
 
         MenuUtama mu = new MenuUtama();
         MenuAdmin ma = new MenuAdmin();
-        MenuUser ms = new MenuUser();
-        MenuParticipant mp = new MenuParticipant();
 
         ObjectMapper mapper = new ObjectMapper();
         List<User> datauser = mapper.readValue(new File("user.json"), new TypeReference<List<User>>() {
@@ -77,8 +74,8 @@ public class MenuController {
                         //operasi initiator
 
                         while (!"exit".equals(menu)) {
-
-                            menu = ms.operasiUser();
+                            MenuUser  mUser = new MenuUser(email);
+                            menu = mUser.operasiUser();
                         }
                         if("exit".equals(menu)){
                                 login();
@@ -91,7 +88,8 @@ public class MenuController {
 
                         while (!"exit".equals(menu)) {
 
-                            menu = mp.operasiParticipant();
+                            MenuUser  mUser = new MenuUser(email);
+                            menu = mUser.operasiParticipant();
                         }
                         if("exit".equals(menu)){
                                 login();
