@@ -63,4 +63,24 @@
   "email" : "ucong@gmail.com",
   "status" : "WAITING",
   "availability" : null
+}, {
+  "id" : 5,
+  "email" : "fernando@gmail.com",
+  "status" : "WAITING",
+  "availability" : null
+}, {
+  "id" : 5,
+  "email" : "novan@gmail.com",
+  "status" : "WAITING",
+  "availability" : null
+}, {
+  "id" : 5,
+  "email" : "novan@gmail.com",
+  "status" : "WAITING",
+  "availability" : null
+}, {
+  "id" : 5,
+  "email" : "ucong@gmail.com",
+  "status" : "WAITING",
+  "availability" : null
 } ]

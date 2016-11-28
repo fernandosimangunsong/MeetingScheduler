@@ -69,28 +69,50 @@ public class MenuAdmin {
         }
         
     }
-    public List formAddUser(){
+    public List formAddUser() throws IOException{
         List adduser = new ArrayList<>();
                 
-        String email,password,name,isAdmin;
+        String email = null,password,name,isAdmin;
         Boolean status;
         
         Scanner input = new Scanner(System.in);
         
         System.out.println("Create User");
-        System.out.print("User Name (Email) :");
-        email = input.nextLine();
         
-        while(!cdt.checkEmail(email)){
-            System.out.println("Email tidak boleh menggunakan spasi");
+        boolean info = true;
+        
+        while(info){
+            info = true;
             System.out.print("User Name (Email) :");
-            email =input.nextLine();
-            while(!cdt.checkDomainEmail(email)){
-                System.out.println("Email harus menggunakan domain @kantor.com");
-                System.out.print("User Name (Email) :");
-                email =input.nextLine();
+            email = input.nextLine();
+            if(cdt.checkString(email) && !cdt.cekEmailExist(email) && cdt.isEmailFormatValid(email) && cdt.checkDomainEmail(email)){
+                info = false;
+            } else {
+                System.out.println("inputan email salah");       
             }
-        }
+        } 
+//        while(!cdt.checkString(email)){
+//            System.out.println("Email tidak boleh kosong");
+//            System.out.print("User Name (Email) :");
+//            email =input.nextLine();
+//        
+//        
+//            while(cdt.cekEmailExist(email)){
+//                System.out.println("Email sudah terdaftar");
+//                System.out.print("User Name (Email) :");
+//                email =input.nextLine();
+//                while(!cdt.checkEmail(email)){
+//                    System.out.println("Email tidak boleh menggunakan spasi");
+//                    System.out.print("User Name (Email) :");
+//                    email =input.nextLine();
+//                    while(!cdt.checkDomainEmail(email)){
+//                        System.out.println("Email harus menggunakan domain @kantor.com");
+//                        System.out.print("User Name (Email) :");
+//                        email =input.nextLine();
+//                    }
+//                }
+//            }
+//        }
         
         adduser.add(email);
         
@@ -148,9 +170,17 @@ public class MenuAdmin {
         }
         
         adduser.add(status);
+        //cek email yang sudah terdaftar atau belum, jika belum return adduser jika sudah email sudah ada.
         
         return adduser;
        
+    }
+    
+    public void formHelpAdmin(){
+        System.out.println("1. list-user, melihat daftar pengguna yang sudah terdaftar dalam sistem.");
+        System.out.println("2. add-user, menambah pengguna baru.");
+        System.out.println("3. edit-user <email>, mengubah data pengguna yang diidentifikasikan dengan <email>.");
+        System.out.println("4. del-user <email>, menghapus pengguna yang yang diidentifikasikan dengan <email>.");
     }
     
     public User formEditUser(){
@@ -165,7 +195,7 @@ public class MenuAdmin {
         System.out.print("User Name (Email) :");
         email =input.nextLine();
         
-        while(!cdt.checkEmail(email)){
+        while(!cdt.isEmailFormatValid(email)){
             System.out.println("Email tidak boleh menggunakan spasi");
             System.out.print("User Name (Email) :");
             email =input.nextLine();
@@ -269,8 +299,12 @@ public class MenuAdmin {
                             email =input.next();
                             admin.deleteUser(email);
                             break;
+                    case "help":
+                        formHelpAdmin();
+                        break;
                     case "exit":
-                         System.exit(0);
+//                         System.exit(0);
+                        
                          break;
                     default:
                         System.out.println("Sintaks error");

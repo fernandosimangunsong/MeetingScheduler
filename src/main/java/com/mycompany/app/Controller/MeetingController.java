@@ -106,64 +106,72 @@ public class MeetingController {
        
        
        List data = menuUser.formAddMeeting();
-       List participant = new ArrayList<>();
-       List vip = new ArrayList<>();
        
-       String judul  =   (String)  data.get(0);
-       String agenda  =  (String)  data.get(1);
-       String lokasi  =  (String)  data.get(2);
-       Integer durasi =  (Integer) data.get(3);
-       
-       String temp = null, temp1=null;
-       temp = (String) data.get(4);
-       participant = CD.splitData(temp);
-       
-       temp1 = (String) data.get(5);
-       vip = CD.splitData(temp1);
-       
-       Date tglAwal  =  (Date) data.get(6);
-       Date tglAhir  =  (Date) data.get(7);
-       Date deadLine =  (Date) data.get(8);
-       
-      
-        
-       mt.setIdM(id);
-       mt.setEmailM(email);
-       mt.setVip(participant);
-       mt.setParcipantM(vip);
-       
-       mt.setJudulM(judul);
-       mt.setAgendaM(agenda);
-       mt.setLokasiM(lokasi);
-       mt.setDurasiM(durasi);
-       
-       mt.setTawal(tglAwal);
-       mt.setTAkhir(tglAhir);
-       mt.setDeadLine(deadLine);
-       
-       mt.setStatusM("NEGOTIATING");
-      // mt.setStatusM(MeetingStatus.NEGOTIATING);
-       
-       tempData.add(mt);
-       saveFileMeeting(tempData,"meeting.json");
-       
-       /* Invitation  */
-       String dataUndangan = data.get(4) +", " + data.get(5);
-       System.out.println(dataUndangan);
-       
-       List undangan = CD.splitData(dataUndangan);
-       System.out.println(undangan);
-       
-       for(int i=0; i<undangan.size();i++){
-           List<Invitation> tempInv = bacaFileInvitation("invitation.json");
-           iV.SetId(id);
-           iV.setEmail((String) undangan.get(i));
-           iV.setStatus("WAITING");
-           tempInv.add(iV);
-           saveFileMeeting(tempInv,"invitation.json");
+       if(!data.isEmpty()){
+            List participant = new ArrayList<>();
+            List vip = new ArrayList<>();
+
+            String judul  =   (String)  data.get(0);
+            String agenda  =  (String)  data.get(1);
+            String lokasi  =  (String)  data.get(2);
+            Integer durasi =  (Integer) data.get(3);
+
+            String temp = null, temp1=null;
+            temp = (String) data.get(4);
+            participant = CD.splitData(temp);
+
+            temp1 = (String) data.get(5);
+            vip = CD.splitData(temp1);
+
+            Date tglAwal  =  (Date) data.get(6);
+            Date tglAhir  =  (Date) data.get(7);
+            Date deadLine =  (Date) data.get(8);
+
+
+
+            mt.setIdM(id);
+            mt.setEmailM(email);
+            mt.setVip(participant);
+            mt.setParcipantM(vip);
+
+            mt.setJudulM(judul);
+            mt.setAgendaM(agenda);
+            mt.setLokasiM(lokasi);
+            mt.setDurasiM(durasi);
+
+            mt.setTawal(tglAwal);
+            mt.setTAkhir(tglAhir);
+            mt.setDeadLine(deadLine);
+
+            mt.setStatusM("NEGOTIATING");
+           // mt.setStatusM(MeetingStatus.NEGOTIATING);
+
+            tempData.add(mt);
+            saveFileMeeting(tempData,"meeting.json");
+
+            /* Invitation  */
+            String dataUndangan = data.get(4) +", " + data.get(5);
+            System.out.println(dataUndangan);
+
+            List undangan = CD.splitData(dataUndangan);
+            System.out.println(undangan);
+
+            for(int i=0; i<undangan.size();i++){
+                List<Invitation> tempInv = bacaFileInvitation("invitation.json");
+                iV.SetId(id);
+                iV.setEmail((String) undangan.get(i));
+                iV.setStatus("WAITING");
+                tempInv.add(iV);
+                saveFileMeeting(tempInv,"invitation.json");
+            }
+             System.out.println("Meeting telah dibuat!");
+       } else {
+           System.out.println("Meeting gagal dibuat!");
        }
        
+       
     }
+    
     
     
     
@@ -230,6 +238,7 @@ public class MeetingController {
        }else{
            System.out.println("Salah");
        }
+        System.out.println("Meeting berhasil diubah!");
     }
     
     /* ============================================================================== */
@@ -267,5 +276,6 @@ public class MeetingController {
             saveFileMeeting(lstMeeting,"meeting.json");
             saveFileMeeting(invit,"invitation.json");
         }
+        System.out.println("Meeting berhasil dibatalkan!");
     }
 }

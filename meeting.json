@@ -8,10 +8,10 @@
   "dateFix" : null,
   "statusM" : "NEGOTIATING",
   "emailM" : "ucong@gmail.com",
-  "vip" : [ "rizki@gmail.com", "novan@gmai.com", "fernando@gmail.com" ],
   "parcipantM" : [ "arif@gmail.com", "jere@gmail.com" ],
-  "tawal" : 1480266000000,
-  "takhir" : 1480352400000
+  "takhir" : 1480352400000,
+  "vip" : [ "rizki@gmail.com", "novan@gmai.com", "fernando@gmail.com" ],
+  "tawal" : 1480266000000
 }, {
   "id" : 3,
   "judulM" : "tugas MI",
@@ -22,10 +22,10 @@
   "dateFix" : null,
   "statusM" : "NEGOTIATING",
   "emailM" : "novan@gmail.com",
-  "vip" : [ "rizki@gmail.com", "novan@gmail.com" ],
   "parcipantM" : [ "ucong@gmail.com" ],
-  "tawal" : 1480266000000,
-  "takhir" : 1480352400000
+  "takhir" : 1480352400000,
+  "vip" : [ "rizki@gmail.com", "novan@gmail.com" ],
+  "tawal" : 1480266000000
 }, {
   "id" : 4,
   "judulM" : "Finshing tugas alpro",
@@ -36,8 +36,22 @@
   "dateFix" : null,
   "statusM" : "NEGOTIATING",
   "emailM" : "ucong@gmail.com",
-  "vip" : [ "novan@gmail.com", "rizki@gmail.com", "fernando@gmail.com" ],
   "parcipantM" : [ "arif@gmail.com", "ucong@gmail.com" ],
-  "tawal" : 1480266000000,
-  "takhir" : 1480266000000
+  "takhir" : 1480266000000,
+  "vip" : [ "novan@gmail.com", "rizki@gmail.com", "fernando@gmail.com" ],
+  "tawal" : 1480266000000
+}, {
+  "id" : 5,
+  "judulM" : "qwesasd",
+  "agendaM" : "asdqwe",
+  "lokasiM" : "qwqwe",
+  "durasiM" : 4,
+  "deadLine" : 1481216400000,
+  "dateFix" : null,
+  "statusM" : "NEGOTIATING",
+  "emailM" : null,
+  "parcipantM" : [ "ucong@gmail.com" ],
+  "takhir" : 1481648400000,
+  "vip" : [ "novan@gmail.com" ],
+  "tawal" : 1481475600000
 } ]
