@@ -1,31 +1,43 @@
 [ {
-  "id" : 10,
-  "email" : "rizki@gmail.com",
-  "status" : "Negosiasi",
-  "availability" : null
+  "id" : 2,
+  "judulM" : "tugas alpro",
+  "agendaM" : "beresin laporan, demo",
+  "lokasiM" : "Room01",
+  "durasiM" : 5,
+  "deadLine" : 1480006800000,
+  "dateFix" : null,
+  "statusM" : "NEGOTIATING",
+  "emailM" : "ucong@gmail.com",
+  "vip" : [ "rizki@gmail.com", "novan@gmai.com", "fernando@gmail.com" ],
+  "parcipantM" : [ "arif@gmail.com", "jere@gmail.com" ],
+  "tawal" : 1480266000000,
+  "takhir" : 1480352400000
 }, {
-  "id" : 10,
-  "email" : "ucong@gmail.com",
-  "status" : "Negosiasi",
-  "availability" : null
+  "id" : 3,
+  "judulM" : "tugas MI",
+  "agendaM" : "beresin tugas MI",
+  "lokasiM" : "Room02",
+  "durasiM" : 4,
+  "deadLine" : 1480006800000,
+  "dateFix" : null,
+  "statusM" : "NEGOTIATING",
+  "emailM" : "novan@gmail.com",
+  "vip" : [ "rizki@gmail.com", "novan@gmail.com" ],
+  "parcipantM" : [ "ucong@gmail.com" ],
+  "tawal" : 1480266000000,
+  "takhir" : 1480352400000
 }, {
-  "id" : null,
-  "email" : null,
-  "status" : null,
-  "availability" : null
-}, {
-  "id" : 11,
-  "email" : "rizki@gmail.com",
-  "status" : "Negosiasi",
-  "availability" : null
-}, {
-  "id" : 11,
-  "email" : "ucong@gmail.com",
-  "status" : "Negosiasi",
-  "availability" : null
-}, {
-  "id" : 11,
-  "email" : "novan@gmail.com",
-  "status" : "Negosiasi",
-  "availability" : null
+  "id" : 4,
+  "judulM" : "Finshing tugas alpro",
+  "agendaM" : "Rekam Demo",
+  "lokasiM" : "Room01",
+  "durasiM" : 5,
+  "deadLine" : 1480006800000,
+  "dateFix" : null,
+  "statusM" : "NEGOTIATING",
+  "emailM" : "ucong@gmail.com",
+  "vip" : [ "novan@gmail.com", "rizki@gmail.com", "fernando@gmail.com" ],
+  "parcipantM" : [ "arif@gmail.com", "ucong@gmail.com" ],
+  "tawal" : 1480266000000,
+  "takhir" : 1480266000000
 } ]

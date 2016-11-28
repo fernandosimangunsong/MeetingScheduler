@@ -85,7 +85,7 @@ public class AdminController {
                 /*Print data user sebelum edit */
                 System.out.println("Data sebelum edit");
                 
-                 menuadmin.printUserbyEmail(email);
+                menuadmin.printUserbyEmail(email);
                 
                  Integer id = CD.getIdExist(email);
                 

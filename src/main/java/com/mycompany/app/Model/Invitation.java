@@ -14,6 +14,9 @@ public class Invitation {
     private String email;
     private ArrayList Availability;
     private String status;
+//    private String judul;
+//    private String agenda;
+    
 
     public Invitation(){}
     
@@ -59,6 +62,23 @@ public class Invitation {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+//    public String getJudul() {
+//        return judul;
+//    }
+//
+//    public void setJudul(String judul) {
+//        this.judul = judul;
+//    }
+//    
+//    public String getAgenda(String agenda) {
+//        return agenda;
+//    }
+//
+//    public void setAgenda(String agenda) {
+//        this.agenda = agenda;
+//    }
+    
 
    
     

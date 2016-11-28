@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -27,8 +28,16 @@ import java.util.Scanner;
  *
  * @author ucong18
  */
+
+
+
+
+
+
 public class MenuUser {
-   
+    
+    
+    CheckData cd = new CheckData();
     private String emailUser;
     
     public MenuUser(){}
@@ -45,85 +54,274 @@ public class MenuUser {
         return emailUser;
     }
     
-    public void printAllMeeting() throws IOException{
+    /* ============================================================================== */
+    
+     /*                  List Meeting Berdasarkan status Pertemuan                     */    
+     
+     /* ============================================================================== */
+    
+    
+    public void printAllMeeting(String email) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
+        
+        
         List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
         
-        System.out.println(getEmailUser());
+        String status =null;
+        
+        boolean info = false;
+        status = "NEGOTIATING";
+      
+        
+        
+        System.out.println("List Meeting " + status +" :");
         
         for(Meeting mt:lstMeeting){
-            
-                  System.out.println("Initiator     = "+mt.getEmailM());
-                  System.out.println("Judul         = "+mt.getJudulM());
-                  System.out.println("Agenda        = "+mt.getAgendaM());  
+            if(email.equals(mt.getEmailM()) && status.equals(mt.getStatusM())){
+                  System.out.print  ("(ID = "+mt.getId()+")");
+                  System.out.println("   Agenda        = "+mt.getJudulM());
+                  info = true;
+            }
         }
+        
+        if(!info){System.out.println("Empty");}
+        
+        info = false;
+        status = "CANCELED";
+        System.out.println("List Meeting " + status +" :");
+        
+        for(Meeting mt:lstMeeting){
+            if(email.equals(mt.getEmailM()) && status.equals(mt.getStatusM())){
+                  System.out.print  ("(ID = "+mt.getId()+")");
+                  System.out.println("   Agenda        = "+mt.getJudulM());
+                  info = true;
+            }
+        }
+        if(!info){System.out.println("Empty");}
+        
+        info = false;
+        status = "CONFIRMED";
+        System.out.println("List Meeting " + status +" :");
+        
+        for(Meeting mt:lstMeeting){
+            if(email.equals(mt.getEmailM()) && status.equals(mt.getStatusM())){
+                  System.out.print  ("(ID = "+mt.getId()+")");
+                  System.out.println("   Agenda        = "+mt.getJudulM());
+                  info = true;
+            }
+        }
+        if(!info){System.out.println("Empty");}
+        
+        info = false;
+        status = "RUNNING";
+        System.out.println("List Meeting " + status +" :");
+        
+        for(Meeting mt:lstMeeting){
+            if(email.equals(mt.getEmailM()) && status.equals(mt.getStatusM())){
+                  System.out.print  ("(ID = "+mt.getId()+")");
+                  System.out.println("   Agenda        = "+mt.getJudulM());
+                  info = true;
+            }
+        }
+        if(!info){System.out.println("Empty");}
+        
+        
+        info = false;
+        status = "FINISHED";
+        System.out.println("List Meeting " + status +" :");
+        
+        for(Meeting mt:lstMeeting){
+            if(email.equals(mt.getEmailM()) && status.equals(mt.getStatusM())){
+                  System.out.print  ("(ID = "+mt.getId()+")");
+                  System.out.println("   Agenda        = "+mt.getJudulM());
+                  info = true;
+            }
+        }
+        if(!info){System.out.println("Empty");}
+        
+        
+        
            
     }
     
-    public List formAddMeeting() throws ParseException, IOException{
+    
+    
+    /* ============================================================================== */
+    
+     /*           Detail Meeting Berdasarkan id   dan data invitation               */    
+     
+     /* ============================================================================== */
+    
+    public void detailMeeting(int id, String email) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        
+        
+        List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
+        List<Invitation> datainvit = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        boolean info = false;
+        for(Meeting usr:lstMeeting){
+            if(email.equals(usr.getEmailM()) && id==(usr.getId())){
+                 System.out.println("Title : " +usr.getJudulM() );
+                 System.out.println("Agenda : " +usr.getAgendaM());
+                 System.out.println("Lokasi : " +usr.getLokasiM());
+                 System.out.println("Durasi (Jam) : " +usr.getDurasiM());
+                 System.out.println("Proposed Date : " +usr.getTawal()+ " - " +usr.getTAkhir());
+                 System.out.println("Participant Vip : " +usr.getVip());
+                 System.out.println("Participant : " +usr.getParcipantM());
+                 
+                 info = true;
+            } 
+            
+        }
+        
+        for(Invitation data:datainvit){
+                if( id ==(data.getId())){
+                  System.out.print("(Email : "+data.getEmail()+") ");
+                  System.out.print(", ");
+                  System.out.print("Status  : "+data.getStatus());
+                  System.out.println("");
+                }
+         }
+        if(!info){System.out.println("id meeting tidak ditemukan ");}
+    }
+    
+    
+    
+    
+    /* ============================================================================== */
+    
+             /*                    Form Add Meeting                            */    
+     
+    /* ============================================================================== */
+    
+     public List formAddMeeting() throws ParseException, IOException{
         List addDataMeeting = new ArrayList<>();
         String peserta=null,vip=null,tempDate=null, judul=null, agenda=null,lokasi=null,email=null;
         Integer durasi;
-        
-       
-       
-        
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+               
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+
+        System.out.print("Judul  :");
+        judul =reader.readLine();
+
+        while(!cd.checkLengthMeeting(judul)){
+            System.out.println("Judul minimal 5 karakter");
+            System.out.print("Judul  :");
+            judul = reader.readLine();
+        }
+
+        System.out.print("Agenda :");
+        agenda =reader.readLine();
+
+        while(!cd.checkLengthMeeting(agenda)){
+            System.out.println("Agenda minimal 5 karakter");
+            System.out.print("Agenda  :");
+            agenda = reader.readLine();
+        }
+
+        System.out.print("Lokasi (Room01 - Room05) :");
+        lokasi =reader.readLine();
+        //memeriksa apakah data diisi atau tidak
+        while(!cd.checkString(lokasi)){
+            System.out.println("Data tidak boleh kosong");
+            System.out.print("Lokasi (Room01 - Room05) :");
+            lokasi = reader.readLine();
+            while(!cd.checkLokasi(lokasi)){
+                System.out.println("Ruangan tidak ditemukan");
+                System.out.print("Lokasi (Room01 - Room05)  :");
+                lokasi = reader.readLine();
+            }
+        }
+
+        System.out.print("Durasi (1 - 6) :");
+        String temp = reader.readLine();
+        durasi = Integer.parseInt(temp);
+
+        while(!cd.checkDurasi(durasi)){
+            System.out.println("Inputan tidak valid");
+            System.out.print("Durasi (1 - 6) :");
+            temp = reader.readLine();
+            durasi = Integer.parseInt(temp);
+        }
+
+
+        boolean valid=false;
+        List dataVip = null;
+        while(!valid){
+            System.out.print("Peserta VIP :");
+            vip = reader.readLine();
+            if(vip.isEmpty()){
+                valid = false;
+            } else {
+                dataVip = cd.splitData(vip);
+                for (int i = 0; i < dataVip.size(); i++) {
+                    if(cd.cekEmailExist((String) dataVip.get(i))){
+                        valid = true;
+                    } else {
+                        valid = false;
+                    }
+                }
+            }
+        }
+
+        valid=false;
+        while(!valid){
+            System.out.print("Peserta Umum :");
+            peserta = reader.readLine();
+            if(peserta.isEmpty()){
+                valid = false;
+            } else {
+                List dataPeserta = cd.splitData(peserta);
+                for (int i = 0; i < dataPeserta.size(); i++) {
+                    if(cd.cekEmailExist((String) dataPeserta.get(i))){
+                        valid = true;
+                    } else {
+                        valid = false;
+                    }
+                }
+                for (int i = 0; i < dataPeserta.size(); i++) {
+                    for (int j = 0; j < dataVip.size(); j++) {
+                        if(dataPeserta.get(i).equals(dataVip.get(j))){
+                            valid = false;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        System.out.println("Rentang Tanggal Yang Dapat diusulkan");
+        System.out.println("Contoh  Inputan : DD/MM/YYYY-DD/MM/YYYY");
+        System.out.print  ("Masukkan Tanggal:");
+        tempDate = reader.readLine();
+        //memeriksa apakah data diisi atau tidak
+        while(!cd.checkString(tempDate)){
+            System.out.println("Data tidak boleh kosong");
+            System.out.print("Tanggal  :");
+            tempDate = reader.readLine();
+        }
+
+
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date StartDate = format.parse(tempDate.substring(0, 10));
+        Date EndDate = format.parse(tempDate.substring(11, 21));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(StartDate);
+        cal.add(Calendar.DATE, -3);
+        Date negotiationDeadline = cal.getTime();
+        System.out.println(negotiationDeadline);
                 
-        
-                System.out.print("Judul  :");
-                judul =reader.readLine();
-
-                System.out.print("Agenda :");
-                agenda =reader.readLine();
-
-                System.out.print("Lokasi :");
-                lokasi =reader.readLine();
-
-
-                System.out.print("Durasi :");
-                String temp = reader.readLine();
-                durasi = Integer.parseInt(temp);
-
-
-
-                System.out.print("Peserta VIP :");
-                vip = reader.readLine();
-                
-                System.out.print("Peserta Umum :");
-                peserta = reader.readLine();
-
-
-                System.out.println("Rentang Tanggal Yang Dapat diusulkan");
-                System.out.println("Contoh  Inputan : DD/MM/YYYY-DD/MM/YYYY");
-                System.out.print  ("Masukkan Tanggal:");
-
-                tempDate = reader.readLine();
-
-
-                String pattern = "DD/MM/YYYY";
-                SimpleDateFormat format = new SimpleDateFormat(pattern);
-                Date StartDate = format.parse(tempDate.substring(0, 10));
-                Date EndDate = format.parse(tempDate.substring(11, 21));
-
-
-                System.out.println("Batas akhir konfirmasi");
-                System.out.println("Contoh  Inputan : DD/MM/YYYY");
-                System.out.print  ("Masukkan Tanggal:");
-
-                tempDate = reader.readLine();
-                Date negotiationDeadline = format.parse(tempDate);
-                
-        
-        
         
         addDataMeeting.add(judul);
         addDataMeeting.add(agenda);
         addDataMeeting.add(lokasi);
         addDataMeeting.add(durasi);
         
-        addDataMeeting.add(peserta);
         addDataMeeting.add(vip);
+        addDataMeeting.add(peserta);
         
         addDataMeeting.add(StartDate);
         addDataMeeting.add(EndDate);
@@ -135,57 +333,234 @@ public class MenuUser {
         return addDataMeeting;
        
     }
+     
+     /* ============================================================================== */
+    
+     /*                           Form Edit Meeting                                    */    
+     
+     /* ============================================================================== */
+    
+     public Meeting formEditMeeting() throws ParseException, IOException{
+        Meeting meeting = new Meeting();
+        
+        List addDataMeeting = new ArrayList<>();
+        
+        String peserta=null,vip=null,tempDate=null, judul=null, agenda=null,lokasi=null,email=null;
+        Integer durasi;
+               
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+
+        System.out.print("Judul  :");
+        judul =reader.readLine();
+
+        while(!cd.checkLengthMeeting(judul)){
+            System.out.println("Judul minimal 5 karakter");
+            System.out.print("Judul  :");
+            judul = reader.readLine();
+        }
+
+        System.out.print("Agenda :");
+        agenda =reader.readLine();
+
+        while(!cd.checkLengthMeeting(agenda)){
+            System.out.println("Agenda minimal 5 karakter");
+            System.out.print("Agenda  :");
+            agenda = reader.readLine();
+        }
+
+        System.out.print("Lokasi (Room01 - Room05) :");
+        lokasi =reader.readLine();
+        //memeriksa apakah data diisi atau tidak
+        while(!cd.checkString(lokasi)){
+            System.out.println("Data tidak boleh kosong");
+            System.out.print("Lokasi (Room01 - Room05) :");
+            lokasi = reader.readLine();
+            while(!cd.checkLokasi(lokasi)){
+                System.out.println("Ruangan tidak ditemukan");
+                System.out.print("Lokasi (Room01 - Room05)  :");
+                lokasi = reader.readLine();
+            }
+        }
+
+        System.out.print("Durasi (1 - 6) :");
+        String temp = reader.readLine();
+        durasi = Integer.parseInt(temp);
+
+        while(!cd.checkDurasi(durasi)){
+            System.out.println("Inputan tidak valid");
+            System.out.print("Durasi (1 - 6) :");
+            temp = reader.readLine();
+            durasi = Integer.parseInt(temp);
+        }
+
+
+
+
+        System.out.println("Rentang Tanggal Yang Dapat diusulkan");
+        System.out.println("Contoh  Inputan : DD/MM/YYYY-DD/MM/YYYY");
+        System.out.print  ("Masukkan Tanggal:");
+        tempDate = reader.readLine();
+        //memeriksa apakah data diisi atau tidak
+        while(!cd.checkString(tempDate)){
+            System.out.println("Data tidak boleh kosong");
+            System.out.print("Tanggal  :");
+            tempDate = reader.readLine();
+        }
+
+
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date StartDate = format.parse(tempDate.substring(0, 10));
+        Date EndDate = format.parse(tempDate.substring(11, 21));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(StartDate);
+        cal.add(Calendar.DATE, -3);
+        Date negotiationDeadline = cal.getTime();
+        System.out.println(negotiationDeadline);
+                
+        
+        meeting.setJudulM(judul);
+        meeting.setAgendaM(agenda);
+        meeting.setLokasiM(lokasi);
+        meeting.setDurasiM(durasi);
+        
+        /* participant gk di hapus tapi di tambah */
+        //addDataMeeting.add(vip);
+        //addDataMeeting.add(peserta);
+        
+        meeting.setTawal(StartDate);
+        meeting.setTAkhir(EndDate);
+        meeting.setDeadLine(negotiationDeadline);
+        
+        
+        return meeting;
+       
+    }
+     
+     /* ============================================================================== */
+    
+             /*                    Form Invitaion                             */    
+     
+    /* ============================================================================== */
     
     public Invitation formInvitation() throws IOException, ParseException{
         Invitation iv = new Invitation();
-        CheckData cd = new CheckData();
+        
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
        
         String status,temp;
         List availability = new ArrayList<>();
         
-        Scanner input = new Scanner(System.in);
+//        Scanner input = new Scanner(System.in);
         
-        System.out.println("Invitation");
-        System.out.print("Status :");
-        status =reader.readLine();
-        
-        
+//        System.out.println("Invitation");
+//        System.out.print("Status :");
+//        status =reader.readLine();       
         /*
-            11/11/2016 6, 12/11/2016 7
+          contoh isi temp:  11/11/2016 6, 12/11/2016 7
         */
         
         System.out.print("Waktu yang tersedia :");
         temp =reader.readLine();
         
         /* ubah tanggal yang dalam bentuk string ke format date */
-        String pattern = "DD/MM/YYYY";
-        availability = cd.splitData1(temp);
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        for(int i=0; i<availability.size(); i+=2){
-                temp = (String) availability.get(i);                
-                Date negotiationDeadline = format.parse(temp);
-                availability.set(i, negotiationDeadline);
-                
-        }
+        availability = cd.splitData2(temp);
         
-        /* ubah tanggal yang dalam bentuk string ke format date */
-        
-        for(int i=1; i<availability.size(); i+=2){
-                 temp =  (String) availability.get(i);
-                 int var = Integer.parseInt(temp);
-                 availability.set(i, var);
+
                 
-        }
-       
-                
-        iv.setStatus(status);
+        iv.setStatus("CONFIRMED");
         iv.setAvailability((ArrayList) availability);
         
         return iv;
        
     }
     
+     /* ============================================================================== */
+    
+             /*                   List All Invitation By Email                           */    
+     
+    /* ============================================================================== */
+    
+    public void listAllMyInvitation(String email) throws IOException{
+        /* menampilkan undangan berdasarkan email */
+        CheckData cd = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Invitation> listdata = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
+        
+        List id = new ArrayList();
+        id = cd.getIdInvitation(email);
+       
+        
+        if(!id.isEmpty()){
+          for(Invitation data:listdata){
+                if(email.equals(data.getEmail())){
+                  System.out.print("(Id : "+data.getId()+") ");
+                  System.out.print(", ");
+                  System.out.print("Status  : "+data.getStatus());
+                  System.out.println("");
+                }
+           }
+          
+        }else{
+            System.out.println("Tidak ada invitation untuk anda");
+        }
+        
+    }
+    
+     /* ============================================================================== */
+    
+         /*          Detail Invitation By Id meeting & email                   */    
+     
+    /* ============================================================================== */
+    public void detailMyInvitation(int idx, String email) throws IOException{
+        /* menampilkan undangan berdasarkan email */
+        CheckData cd = new CheckData();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Invitation> listdata = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        List<Meeting> lstMeeting = mapper.readValue(new File("meeting.json"),new TypeReference<List<Meeting>>(){});
+        
+        List id = new ArrayList();
+        id = cd.getIdInvitation(email);
+       
+        
+        if(!id.isEmpty()){
+          for(Invitation data:listdata){
+                if(email.equals(data.getEmail()) && idx==(data.getId())){
+                  System.out.print("(Id : "+data.getId()+") ");
+                  System.out.print(", ");
+                  System.out.print("Status  : "+data.getStatus());
+                  System.out.println("");
+                }
+           }
+          
+           for(Meeting usr:lstMeeting){
+                if( idx==(usr.getId())){
+                     System.out.println("Title : " +usr.getJudulM() );
+                     System.out.println("Agenda : " +usr.getAgendaM());
+                     System.out.println("Lokasi : " +usr.getLokasiM());
+                     System.out.println("Durasi (Jam) : " +usr.getDurasiM());
+                     System.out.println("Proposed Date : " +usr.getTawal()+ " - " +usr.getTAkhir());
+                     System.out.println("Participant Vip : " +usr.getVip());
+                     System.out.println("Participant : " +usr.getParcipantM());
+
+                     
+                } 
+            }
+        }else{
+            System.out.println("Tidak ada invitation untuk anda");
+        }
+        
+    }
+    
+    
+    /* ============================================================================== */
+    
+             /*                    Kumpulan Menu User                             */    
+     
+    /* ============================================================================== */
     public String operasiUser() throws IOException, ParseException{
         Meeting meeting = new Meeting();
         Invitation invit = new Invitation();
@@ -209,34 +584,59 @@ public class MenuUser {
             
             switch (menu) {
 
-                    case "c":
+                    case "create-meeting":
                             MC.createMeeting(email);
                         break;
 
-                    case "p":
-                            printAllMeeting();
+                    case "list-meeting":
+                            printAllMeeting(email);
                         break;
 
-                    case "i":
-                            IV.listAllMyInvitation(email);
-                            break;
+                    case "detail-meeting":
+                            id =input.nextInt();
+                            detailMeeting(id,email);
+                        break;
+                        
+                    case "cancel-meeting":
+                            id =input.nextInt();
+                            MC.cancelMeeting(id,email);
+                        break;
 
-                    case "e":
-                           MC.printemail();
-                            //id =input.nextInt();
+                    case "list-invitation":
+                            listAllMyInvitation(email);
+                            break;
+                            
+                            
+                    case "detail-invitation":
+                            id =input.nextInt();
+                            detailMyInvitation(id,email);
                             break;
                     
-                    case "con":
+                    case "reject-invitation":
+                            id =input.nextInt();
+                            IV.rejectInvitation(id,email);
+                            break;   
+                            
+                    case "accept-invitation":
                             id =input.nextInt();
                             IV.editMyInvitation(id,email);
-                            
                             break;
                     
+                    case "edit-meeting":
+                            id =input.nextInt();
+                            MC.editMeeting(id,email);
+                            
+                            break;
                             
                     case "run-scheduler":
                             id =input.nextInt();
                             break;
                     
+                    case "e":
+                           MC.printemail();
+                            //id =input.nextInt();
+                            break;
+                            
                     case "exit":
                          System.exit(0);
                          break;

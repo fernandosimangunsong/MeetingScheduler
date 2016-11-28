@@ -34,6 +34,8 @@ public class Meeting{
    private Date dateFix;
    
    private String statusM;
+   //private MeetingStatus statusM;
+   
    
    
    

@@ -10,9 +10,9 @@
   "isAdmin" : false
 }, {
   "email" : "rizki@gmail.com",
-  "password" : "124524",
+  "password" : "123",
   "name" : "rizki",
-  "isAdmin" : true
+  "isAdmin" : false
 }, {
   "email" : "ucong@gmail.com",
   "password" : "12345",

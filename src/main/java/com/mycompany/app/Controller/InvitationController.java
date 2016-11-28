@@ -8,6 +8,7 @@ package com.mycompany.app.Controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.app.Model.Invitation;
+import com.mycompany.app.Model.Meeting;
 import com.mycompany.app.Services.CheckData;
 import com.mycompany.app.View.MenuUser;
 import java.io.File;
@@ -39,33 +40,12 @@ public class InvitationController {
         
     }
     
-    public void saveFileMeeting(List dM) throws IOException  {
+    public void saveFileInvitation(List dM) throws IOException  {
 	ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("invitation.json"),dM);
     }
     
-    public void listAllMyInvitation(String email) throws IOException{
-        /* menampilkan undangan berdasarkan email */
-        CheckData cd = new CheckData();
-        ObjectMapper mapper = new ObjectMapper();
-        List<Invitation> listdata = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
-        
-        
-        List id = new ArrayList();
-        id = cd.getIdInvitation(email);
-        
-        if(!id.isEmpty()){
-          for(Invitation data:listdata){
-                if(email.equals(data.getEmail())){
-                  System.out.println("Id     = "+data.getId());
-                  System.out.println("Status  = "+data.getStatus());
-                }
-           }  
-        }else{
-            System.out.println("Tidak ada invitation untuk anda");
-        }
-        
-    }
+    
     
     public void editMyInvitation(int id,String email) throws IOException, ParseException{
         CheckData cd = new CheckData();
@@ -88,7 +68,7 @@ public class InvitationController {
                  
                  datainvit.set(index,data);
           
-                 saveFileMeeting(datainvit);
+                 saveFileInvitation(datainvit);
                 
                 
         }else{
@@ -97,5 +77,28 @@ public class InvitationController {
     }
     
    
-    
+    public void rejectInvitation(int id, String email) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        
+        
+        List<Invitation> invit = mapper.readValue(new File("invitation.json"),new TypeReference<List<Invitation>>(){});
+        
+        boolean info = false;
+        
+        
+        
+        for(Invitation inv:invit){
+            if(id==(inv.getId()) && email.equals(inv.getEmail())){
+                        //System.out.println("ubah");
+                        inv.setStatus("REJECTED");
+                        info=true;
+            } 
+        }
+        
+        if(!info){
+            System.out.println("id meeting tidak ditemukan ");
+        }else{
+            saveFileInvitation(invit);
+        }
+    }
 }
